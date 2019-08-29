@@ -15,20 +15,18 @@ class env:
         tamaño = sizeX*sizeY
         self.init_posX = init_posX
         self.init_posY = init_posY
-        dirtSlotsAmount = (dirt_rate * tamaño)/100
+        self.dirtSlotsAmount = (dirt_rate * tamaño)/100
         self.m[init_posX][init_posY] = 2
         for i in range (0,sizeX):
             for j in range(0,sizeY):
                 self.m[i][j] = 0
-#               if (i < dirt_rate):
-#                   random.randint()
         i = 0
-        while (i < dirtSlotsAmount):
+        while (i < self.dirtSlotsAmount):
             slotX = random.randint(0,self.sizeX-1)
             slotY = random.randint(0,self.sizeY-1)
             if (self.m[slotX][slotY] == 0):
                 self.m[slotX][slotY] = 1
-                #print(i ," de ", dirtSlotsAmount)
+                print(i ," de ", self.dirtSlotsAmount)
                 i = i + 1
         print("Ambiente generado")
     def accept_action(self,action,x,y):
@@ -71,7 +69,7 @@ class env:
         print('\n'*5)
         for a in range(0,self.sizeX):
             for b in range(0,self.sizeY):
-                print("|",self.m[a][b],end=' ')
+                print("|",int(self.m[a][b]),end=' ')
             print("|")
 
 

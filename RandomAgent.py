@@ -1,12 +1,10 @@
-
+import random
 
 class agent:
     def __init__(self,env):
         self.env = env
         self.x = env.init_posX
         self.y = env.init_posY
-        self.derecha = True
-        self.posicionar()
         self.comenzar()
     def up(self):
         x = self.env.accept_action("arriba",self.x,self.y)
@@ -36,43 +34,30 @@ class agent:
         self.env.accept_action("limpiar", self.x,self.y)
     def idle(self):  # no hace nada
         self.env.accept_action("nada", self.x,self.y)
-    def posicionar(self):
-        arriba = True
-        izquierda = True
-        while (arriba == True or izquierda == True):
-            if (self.up() == False):
-                arriba = False
-            if (self.left() == False):
-                izquierda = False
-        print("Etapas Iniciales: ", self.env.steps)
-        print("Agente posicionado en [0,0]")
     def comenzar(self):
         self.suck()
         while (self.env.steps != 1000):
-            if (self.derecha == True):
-                x = self.right()
-                if (x == False):
-                    x = self.down()
-                    if (x == False):
-                        # La aspiradora llegó al final
-                        break
-                    self.derecha = False
+            rand = random.randint(0,3)
+            if(self.env.puntos >= int(self.env.dirtSlotsAmount)):
+                # La aspiradora limpió correctamente.
+                break
+            if (rand == 0): # arriba
+                x = self.up()
+                if (x == True):
                     self.suck()
-                    continue
-                self.suck()
-            else:
+            elif (rand == 1): # abajo
+                x = self.down()
+                if (x == True):
+                    self.suck()
+            elif (rand == 2):  # izquierda
                 x = self.left()
-                if (x == False):
-                    x = self.down()
-                    if (x == False):
-                        # La aspiradora llegó al final
-                        break
-                    self.derecha = True
+                if (x == True):
                     self.suck()
-                    continue
-                self.suck()
-            #self.env.print_environment()
-        print("Limpieza finalizada")
+            else: # derecha
+                x = self.right()
+                if (x == True):
+                    self.suck()
+        print("Cantidad de slots sucios: " , int(self.env.dirtSlotsAmount))
         print("Performance obtenido: ", self.env.get_performance())
         print("Etapas: ", self.env.steps)
         print("Puntos: ", self.env.puntos)

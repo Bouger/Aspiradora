@@ -1,4 +1,5 @@
 import Environment
 import Agent
-enviroment = Environment.env(4,4,2,3,70)
-x = Agent.agent(enviroment)
+import RandomAgent
+enviroment = Environment.env(128,128,127,127,80)
+x = RandomAgent.agent(enviroment)
